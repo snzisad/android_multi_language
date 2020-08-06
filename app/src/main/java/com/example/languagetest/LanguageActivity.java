@@ -1,10 +1,13 @@
 package com.example.languagetest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +27,19 @@ public class LanguageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLocal();
+        LocaleManager.loadLocal(this);
         setContentView(R.layout.activity_language);
         setTitle(getResources().getString(R.string.title_change_lang));
 
         rb_en = findViewById(R.id.rb_en);
         rb_bn = findViewById(R.id.rb_bn);
         btn_lang = findViewById(R.id.btn_lang);
+
+        Typeface english_typeface = ResourcesCompat.getFont(this, R.font.times_new_roman);
+        Typeface bangla_typeface = ResourcesCompat.getFont(this, R.font.kalpurush_ansi);
+
+        rb_en.setTypeface(english_typeface);
+        rb_bn.setTypeface(bangla_typeface);
 
 
         if(lang_code.equals("bn")){
@@ -43,44 +52,23 @@ public class LanguageActivity extends AppCompatActivity {
         btn_lang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String local_code = "";
                 if(rb_en.isChecked()){
-                    setLocal("en");
+                    local_code = "en";
                 }
                 else{
-                    setLocal("bn");
+                    local_code = "bn";
                 }
-                Toast.makeText(LanguageActivity.this, R.string.language_changed_success, Toast.LENGTH_SHORT).show();
 
-                LanguageActivity.this.recreate();
-//                startActivity(new Intent(LanguageActivity.this, MainActivity.class));
-//                finish();
+                LocaleManager.setLocal(LanguageActivity.this, local_code);
+                SharedPreferences.Editor editor =  getSharedPreferences("LANG_SETTINGS", MODE_PRIVATE).edit();
+                editor.putString("LANG", local_code);
+                editor.apply();
+
+                startActivity(new Intent(LanguageActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
-
-    private void setLocal(String code){
-        Locale locale = new Locale(code.toLowerCase());
-        Locale.setDefault(locale);
-        Configuration configuration = new Configuration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-        }
-        else{
-            configuration.locale = locale;
-        }
-        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
-
-        // save in shared preferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("LANG", code);
-        editor.apply();
-    }
-
-    private void loadLocal(){
-        sharedPreferences = getSharedPreferences("LANG_SETTINGS", MODE_PRIVATE);
-        lang_code = sharedPreferences.getString("LANG", "en");
-        setLocal(lang_code);
-    }
-
 
 }

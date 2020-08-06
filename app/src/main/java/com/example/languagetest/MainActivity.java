@@ -1,5 +1,6 @@
 package com.example.languagetest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLocal();
+        LocaleManager.loadLocal(this);
 
         setContentView(R.layout.activity_main);
         setTitle(getResources().getString(R.string.title_home));
@@ -50,29 +52,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn1.callOnClick();
-    }
-
-    private void setLocal(String code){
-        Locale locale = new Locale(code.toLowerCase());
-        Locale.setDefault(locale);
-        Configuration configuration = new Configuration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-        }
-        else{
-            configuration.locale = locale;
-        }
-        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
-
-        // save in shared preferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("LANG", code);
-        editor.apply();
-    }
-
-    private void loadLocal(){
-        sharedPreferences = getSharedPreferences("LANG_SETTINGS", MODE_PRIVATE);
-        String lang_code = sharedPreferences.getString("LANG", "en");
-        setLocal(lang_code);
     }
 }
