@@ -35,34 +35,36 @@ public class LanguageActivity extends AppCompatActivity {
         rb_bn = findViewById(R.id.rb_bn);
         btn_lang = findViewById(R.id.btn_lang);
 
-        Typeface english_typeface = ResourcesCompat.getFont(this, R.font.times_new_roman);
-        Typeface bangla_typeface = ResourcesCompat.getFont(this, R.font.kalpurush_ansi);
 
-        rb_en.setTypeface(english_typeface);
-        rb_bn.setTypeface(bangla_typeface);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("LANG_SETTINGS", MODE_PRIVATE);
+        lang_code = sharedPreferences.getString("LANG", "en");
 
         if(lang_code.equals("bn")){
             rb_bn.setChecked(true);
+
+            Typeface english_typeface = ResourcesCompat.getFont(this, R.font.times_new_roman);
+            rb_en.setTypeface(english_typeface);
         }
         else{
             rb_en.setChecked(true);
+
+            Typeface bangla_typeface = ResourcesCompat.getFont(this, R.font.kalpurush_ansi);
+            rb_bn.setTypeface(bangla_typeface);
         }
 
         btn_lang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String local_code = "";
                 if(rb_en.isChecked()){
-                    local_code = "en";
+                    lang_code = "en";
                 }
                 else{
-                    local_code = "bn";
+                    lang_code = "bn";
                 }
 
-                LocaleManager.setLocal(LanguageActivity.this, local_code);
+                LocaleManager.setLocal(LanguageActivity.this, lang_code);
                 SharedPreferences.Editor editor =  getSharedPreferences("LANG_SETTINGS", MODE_PRIVATE).edit();
-                editor.putString("LANG", local_code);
+                editor.putString("LANG", lang_code);
                 editor.apply();
 
                 startActivity(new Intent(LanguageActivity.this, MainActivity.class));
