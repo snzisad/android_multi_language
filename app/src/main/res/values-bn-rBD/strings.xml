@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">ভাষা টেস্টিং</string>
+    <string name="title_home">হোম</string>
+    <string name="title_change_lang">ভাষা পরিবর্তন</string>
+    <string name="title_test">টেস্ট এক্টিভিটি</string>
+
+
+    <string name="btn1">প্রথম ফ্রেগমেন্ট</string>
+    <string name="btn2">দ্বিতীয় ফ্রেগমেন্ট</string>
+    <string name="btn_lang">ভাষা পরিবর্তন করুন</string>
+    <string name="btn_test">টেস্ট এক্টিভিটিতে যান</string>
+    <string name="title">এটা হল একটি টাইটেল</string>
+    <string name="select_language">ভাষা নির্বাচন করুন</string>
+    <string name="change" translatable="false">পরিবর্তন করুন</string>
+    <string name="test">এটা লোকাল টেস্ট করার এক্টিভিটি</string>
+    <string name="language_changed_success">ভাষা সফলভাবে পরিবর্তন হয়েছে</string>
+</resources>

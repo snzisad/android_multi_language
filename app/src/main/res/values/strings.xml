@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name" translatable="false">Language Test</string>
+    <string name="title_home">Home</string>
+    <string name="title_change_lang">Change Language</string>
+    <string name="title_test">Test Activity</string>
+
+
+    <string name="btn1">Fragment 1</string>
+    <string name="btn2">Fragment 2</string>
+    <string name="btn_lang">Change Language</string>
+    <string name="btn_test">Go to test activity</string>
+    <string name="title">This is app title</string>
+    <string name="select_language">Select Language</string>
+    <string name="change">Change</string>
+    <string name="test">It is a local test activity</string>
+    <string name="language_changed_success">Language Changed successfully</string>
+</resources>
